@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Exploratory Statistical Visualization</title>
+  <meta charset="utf-8">
+  <meta name="description" content="Exploratory Statistical Visualization">
+  <meta name="author" content="">
+  <meta name="generator" content="slidify" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/default.css" media="all" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/phone.css" 
+    media="only screen and (max-device-width: 480px)" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/slidify.css" >
+  <link rel="stylesheet" href="libraries/highlighters/highlight.js/css/tomorrow.css" />
+  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->  <link rel=stylesheet href="./assets/css/ribbons.css"></link>
+
+  
+  <!-- Grab CDN jQuery, fall back to local if offline -->
+  <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.min.js"></script>
+  <script>window.jQuery || document.write('<script src="libraries/widgets/quiz/js/jquery.js"><\/script>')</script> 
+  <script data-main="libraries/frameworks/io2012/js/slides" 
+    src="libraries/frameworks/io2012/js/require-1.0.8.min.js">
+  </script>
+  
+  
+
+</head>
+<body style="opacity: 0">
+  <slides class="layout-widescreen">
+    
+    <!-- LOGO SLIDE -->
+        <slide class="title-slide segue nobackground">
+  <hgroup class="auto-fadein">
+    <h1>Exploratory Statistical Visualization</h1>
+    <h2></h2>
+    <p><br/></p>
+  </hgroup>
+  <article></article>  
+</slide>
+    
+
+    <!-- SLIDES -->
+    <slide class="" id="slide-1" style="background:;">
+  <hgroup>
+    <h2>Why do statistician and scientists make visualizations?</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li><p>Get to know the data in order to inform meaningful statistical analysis.</p></li>
+<li><p>Provide general audiences with visual summaries and insight.</p></li>
+<li><p>Display results of a statistical analysis</p></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-2" style="background:;">
+  <hgroup>
+    <h2>Exploratory Statistical Visualization:</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li><p>The focus of this presentation is getting to know the data in order to inform meaningful statistical analysis.</p></li>
+<li><p>Let&#39;s looking at the nature and the shape of the data through visualizations</p></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-3" style="background:;">
+  <article data-timings="">
+    <p>Let&#39;s get an idea of the data by creating some exploratory visualizations. The dataset comes from a July 2013 Pew Internet and American Life Project poll. People across the United States were surveyed on their opinions about topics related to internet anonymity and privacy.</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-4" style="background:;">
+  <article data-timings="">
+    <p>Let&#39;s get an idea of the demograhics of the population. A barplot is a good way to look at the factor variable of geographical region. This stacked barplot displays the of the number of respondents in each region by sex.</p>
+
+<pre><code class="r">library(ggplot2)
+qplot(data = AnonymityPoll, x = Region, fill = Sex, color = Sex)
+</code></pre>
+
+<p><img src="assets/fig/qplot.png" alt="plot of chunk qplot"> </p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-5" style="background:;">
+  <article data-timings="">
+    <p>Let&#39;s see gender side-by-side. This barplot displays the same information in the previous plot in an slightly more useful format for comparing counts by gender.</p>
+
+<pre><code class="r">ggplot(AnonymityPoll, aes(Region, fill = Sex)) + geom_bar(position = &quot;dodge&quot;)
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-2.png" alt="plot of chunk unnamed-chunk-2"> </p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-6" style="background:;">
+  <article data-timings="">
+    <p>Age may be a relevant variable in a statistical analysis. This histogram displays the distribution of respondents to the survey by age. We can see that the ages are skewed to the left with fewer respondents over the age of seventy-five.</p>
+
+<pre><code class="r">ggplot(data = AnonymityPoll, aes(x = Age)) + geom_histogram(binwidth = 1, fill = &quot;#099DD9&quot;, 
+    alpha = 0.5)
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-3.png" alt="plot of chunk unnamed-chunk-3"> </p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-7" style="background:;">
+  <article data-timings="">
+    <p>Let&#39;s look at the shape of the data by transforming the data on a log scale. The data pattern has become more evident and more interpretable for inferential statistics.</p>
+
+<p><img src="assets/fig/unnamed-chunk-4.png" alt="plot of chunk unnamed-chunk-4"> </p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-8" style="background:;">
+  <article data-timings="">
+    <p>By examining the nature and shape of the data through this exploration, we can determine what types of statistical analysis may be useful. </p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-9" style="background:;">
+  <article data-timings="">
+    <p>Scatterplot are useful in examining the relationships between two continous variables.</p>
+
+<p>In the survey, respondents were asked how important internet privacy is to them. Let&#39;s find out if there is a correlation between the importance of internet privacy and age.</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-10" style="background:;">
+  <article data-timings="">
+    <p>The scatterplot shows that there is not a linear relationship between privacy importance and age.</p>
+
+<p>More respondents indicated that privacy is very important as indicated by the deeper color of dots in that region. But there is no correlation between age and privacy importance as the results are widely distributed across both age and degree of privacy importance.</p>
+
+<p><img src="assets/fig/unnamed-chunk-5.png" alt="plot of chunk unnamed-chunk-5"> </p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-11" style="background:;">
+  <article data-timings="">
+    <p>As mentioned, barplots are useful for looking at the counts data of a single variable. Let&#39;s look at the amount of information on the internet on them in the opinion of the respondent faceted by gender. </p>
+
+<pre><code class="r">ggplot(AnonymityPoll, aes(Info.On.Internet)) + geom_bar() + facet_wrap(~Sex)
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-6.png" alt="plot of chunk unnamed-chunk-6"> </p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-12" style="background:;">
+  <article data-timings="">
+    <p>We can also look at this information in another way in this dodged barplot. We see a useful comparison by gender.</p>
+
+<pre><code class="r">ggplot(AnonymityPoll, aes(Info.On.Internet, fill = Sex)) + geom_bar(position = &quot;dodge&quot;)
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-7.png" alt="plot of chunk unnamed-chunk-7"> </p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-13" style="background:;">
+  <article data-timings="">
+    <p>Now, let&#39;s look more in-depth at the privacy importance. 
+<br/>
+The privacy importance histograms are faceted by gender. In both cases, the distributions are left-skewed with more respondents indicating that internet privacy is important.
+<img src="assets/fig/unnamed-chunk-8.png" alt="plot of chunk unnamed-chunk-8"> </p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-14" style="background:;">
+  <article data-timings="">
+    <p>A useful way to look at the distribution of responses is in a frequency polygon plot. Here, privacy importance is faceted by gender.</p>
+
+<p><img src="assets/fig/unnamed-chunk-9.png" alt="plot of chunk unnamed-chunk-9"> </p>
+
+<p>It appears the directions of responses are similar with slightly higher and lower counts at different degrees of privacy importance.</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-15" style="background:;">
+  <article data-timings="">
+    <p>By looking at this density plot, we can see that there are more males who have less concern over privacy and more females who have given greater importance to internet privacy.</p>
+
+<pre><code class="r">ggplot(AnonymityPoll, aes(Privacy.Importance, color = Sex)) + geom_density()
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-10.png" alt="plot of chunk unnamed-chunk-10"> </p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-16" style="background:;">
+  <article data-timings="">
+    <p>Let&#39;s look at the same variables in a boxplot which is a good way to visualize continuous and categorical variables. The interquartile range for males is wider and females have a higher median value for privacy importance. This is consistent with the findings we saw in the frequency polygons.</p>
+
+<p><img src="assets/fig/unnamed-chunk-11.png" alt="plot of chunk unnamed-chunk-11"> </p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-17" style="background:;">
+  <article data-timings="">
+    <p>Let&#39;s look at the relationship between some of the other demographic data including age and conservativeness. The plot shows that there is not a linear relationship. The deeper colored dots indicate that most respondents neither very conservative or very liberal. Furthermore, this data is spread across all age groups.</p>
+
+<p><img src="assets/fig/unnamed-chunk-12.png" alt="plot of chunk unnamed-chunk-12"> </p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-18" style="background:;">
+  <article data-timings="">
+    <p>This boxplot gives an excellent summary of the interquartile range and median of privacy importance by level of conservativeness faceted by gender. Males have a wider range of privacy importance and lower median importance at all levels of conservativeness. There is no clear correlation between conservativeness and privacy importance as the responses.</p>
+
+<p><img src="assets/fig/unnamed-chunk-13.png" alt="plot of chunk unnamed-chunk-13"> </p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-19" style="background:;">
+  <article data-timings="">
+    <p>Great! We have seen a lot of useful visualization to inform our statistical analysis.</p>
+
+<p>We&#39;ve learned that there may not be correlations or relationships between variables.</p>
+
+<p>We may even design a new study that asks different questions.</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-20" style="background:;">
+  <article data-timings="">
+    <p>Summarizing data also informs meaningful statistical analysis. Let&#39;s look the mean and the median of privacy importance summarized by age.</p>
+
+<pre><code>## Source: local data frame [6 x 4]
+## 
+##   Age privacyimp_mean privacyimp_median  n
+## 1  18           54.63             52.78 13
+## 2  19           58.57             66.67 16
+## 3  20           43.06             38.89 12
+## 4  21           38.99             27.78 14
+## 5  22           53.75             50.00 16
+## 6  23           51.47             47.22 19
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-21" style="background:;">
+  <article data-timings="">
+    <p>The plot of the privacy importance mean by age indicates a general n-shaped curve. Our previous histogram of the age distribution is coming in handy. Remember that there are more respondents in younger age groups and fewer respondents over seventy-five. Thus,it may also be useful to look at the median privacy mean by age.</p>
+
+<p><img src="assets/fig/unnamed-chunk-15.png" alt="plot of chunk unnamed-chunk-15"> </p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-22" style="background:;">
+  <article data-timings="">
+    <p>The median privacy mean by age also indicates an n-shaped curve with slightly more dispersion. Privacy importance is less important at ages under twenty-five and ages of seventy-five. If few people over the age of seventy-five use the internet then internet privacy may less of a concern to them. Notice the wider bands in the older values for age where there are fewer respondents in the survey.</p>
+
+<p><img src="assets/fig/unnamed-chunk-16.png" alt="plot of chunk unnamed-chunk-16"> </p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-23" style="background:;">
+  <article data-timings="">
+    <p>Previously, I summarized the data on one variable of age. Now let&#39;s look at the data summarized by two variables,age and gender. Each unique combination of age and gender is represented.</p>
+
+<pre><code>## Source: local data frame [6 x 5]
+## 
+##   Age    Sex bprivacyimp_mean bprivacyimp_median bn
+## 1  18 Female            37.04              44.44  3
+## 2  18   Male            60.49              66.67 10
+## 3  19 Female            51.06              63.89  6
+## 4  19   Male            63.58              66.67 10
+## 5  20 Female            61.11              72.22  3
+## 6  20   Male            37.04              33.33  9
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-24" style="background:;">
+  <article data-timings="">
+    <p>Let&#39;s plot information on the internet by a log transformation of age. It shows a general decreasing trend with increasing age and a higher degree of variablity for males at some age points. The grand mean is the black plotted line.</p>
+
+<p><img src="assets/fig/unnamed-chunk-18.png" alt="plot of chunk unnamed-chunk-18"> </p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-25" style="background:;">
+  <article data-timings="">
+    <p>Let&#39;s look at the info on the internet by age plotted using a smoother faceted by age. This also shows the decreasing trend  of info on the internet decreasing as age increases nicely de-lineated by gender.</p>
+
+<p><img src="assets/fig/unnamed-chunk-19.png" alt="plot of chunk unnamed-chunk-19"> </p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-26" style="background:;">
+  <hgroup>
+    <h2>We&#39;ve only just begun!</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>These exploratory visualizations have only just scratched the surface of the plots and variables a statistician or scientist may want to look at in this analysis and we&#39;ve already have gained a lot of meaning from the data.</li>
+<li>This is all before even beginning the statistical modeling process.</li>
+<li>The insight gained through visualizations helps inform the next steps of the data science process. </li>
+<li>Hopefully, this has given you an idea of the visualization process from a statistician&#39;s or data scientist&#39;s perspective.</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-27" style="background:;">
+  <hgroup>
+    <h2>We have learned a lot about our data by doing some smart visualizations.</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>distribution of variables, </li>
+<li>shape of the data</li>
+<li>relationships between variables</li>
+<li>visualization of frequencies</li>
+<li>correlations</li>
+<li>faceting data on a third variable </li>
+<li>usefulness of looking at the same information in a variety of plots</li>
+<li>data transformations including log and smoothing</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-28" style="background:;">
+  <article data-timings="">
+    <p>Thank You</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+    <slide class="backdrop"></slide>
+  </slides>
+  <div class="pagination pagination-small" id='io2012-ptoc' style="display:none;">
+    <ul>
+      <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=1 title='Why do statistician and scientists make visualizations?'>
+         1
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=2 title='Exploratory Statistical Visualization:'>
+         2
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=3 title=''>
+         3
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=4 title=''>
+         4
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=5 title=''>
+         5
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=6 title=''>
+         6
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=7 title=''>
+         7
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=8 title=''>
+         8
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=9 title=''>
+         9
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=10 title=''>
+         10
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=11 title=''>
+         11
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=12 title=''>
+         12
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=13 title=''>
+         13
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=14 title=''>
+         14
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=15 title=''>
+         15
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=16 title=''>
+         16
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=17 title=''>
+         17
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=18 title=''>
+         18
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=19 title=''>
+         19
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=20 title=''>
+         20
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=21 title=''>
+         21
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=22 title=''>
+         22
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=23 title=''>
+         23
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=24 title=''>
+         24
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=25 title=''>
+         25
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=26 title='We&#39;ve only just begun!'>
+         26
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=27 title='We have learned a lot about our data by doing some smart visualizations.'>
+         27
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=28 title=''>
+         28
+      </a>
+    </li>
+  </ul>
+  </div>  <!--[if IE]>
+    <script 
+      src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js">  
+    </script>
+    <script>CFInstall.check({mode: 'overlay'});</script>
+  <![endif]-->
+</body>
+  <!-- Load Javascripts for Widgets -->
+  
+  <!-- LOAD HIGHLIGHTER JS FILES -->
+  <script src="libraries/highlighters/highlight.js/highlight.pack.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <!-- DONE LOADING HIGHLIGHTER JS FILES -->
+   
+  </html>
