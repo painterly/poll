@@ -1,7 +1,7 @@
 ---
 title       : Exploratory Statistical Visualization
 subtitle    : 
-author      : 
+author      : Painterly Analytics
 job         : 
 framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
 highlighter : highlight.js  # {highlight.js, prettify, highlight}
@@ -37,16 +37,26 @@ Let's get an idea of the data by creating some exploratory visualizations. The d
 ---
 Let's get an idea of the demograhics of the population. A barplot is a good way to look at the factor variable of geographical region. This stacked barplot displays the of the number of respondents in each region by sex.
 
-```{r qplot, fig.height=6}
+```{r qplot, fig.height=5}
 library(ggplot2)
 qplot(data=AnonymityPoll,x=Region,fill=Sex,color=Sex)
 
 ``` 
+
+<div class="footer">
+    Painterly Analytics
+</div>
+
 ---
 Let's see gender side-by-side. This barplot displays the same information in the previous plot in an slightly more useful format for comparing counts by gender.
-```{r}
+```{r fig.height=6}
 ggplot(AnonymityPoll, aes(Region, fill=Sex)) + geom_bar(position="dodge")
 ```
+
+<div class="footer">
+    Painterly Analytics
+</div>
+
 ---
 Age may be a relevant variable in a statistical analysis. This histogram displays the distribution of respondents to the survey by age. We can see that the ages are skewed to the left with fewer respondents over the age of seventy-five.
 
@@ -83,6 +93,9 @@ ggplot(aes(x = Privacy.Importance, y = Age), data = AnonymityPoll) +
   geom_jitter(alpha=1/3,color='red')
 ```
 
+<div class="footer">
+    Painterly Analytics
+</div>
 
 ---
 As mentioned, barplots are useful for looking at the counts data of a single variable. Let's look at the amount of information on the internet on them in the opinion of the respondent faceted by gender. 
@@ -91,11 +104,19 @@ ggplot(AnonymityPoll, aes(Info.On.Internet)) + geom_bar() +
   facet_wrap(~ Sex)
 ```
 
+<div class="footer">
+    Painterly Analytics
+</div>
+
 ---
 We can also look at this information in another way in this dodged barplot. We see a useful comparison by gender.
 ```{r fig.height=6,fig.width=8,message=FALSE, warning=FALSE}
 ggplot(AnonymityPoll, aes(Info.On.Internet,fill=Sex)) + geom_bar(position="dodge")
 ```
+
+<div class="footer">
+    Painterly Analytics
+</div>
 
 ---
 Now, let's look more in-depth at the privacy importance. 
@@ -108,6 +129,7 @@ ggplot(aes(x = Privacy.Importance), data = subset(AnonymityPoll, !is.na(Sex))) +
   scale_x_log10()
 ```
 
+
 ---
 A useful way to look at the distribution of responses is in a frequency polygon plot. Here, privacy importance is faceted by gender.
 
@@ -117,6 +139,7 @@ ggplot(aes(x = Privacy.Importance, y = ..count../sum(..count..)), data = subset(
 ```
 It appears the directions of responses are similar with slightly higher and lower counts at different degrees of privacy importance.
 
+
 ---
 By looking at this density plot, we can see that there are more males who have less concern over privacy and more females who have given greater importance to internet privacy.
 ```{r fig.width=8,fig.height=6, warning=FALSE, message=FALSE}
@@ -124,12 +147,20 @@ ggplot(AnonymityPoll, aes(Privacy.Importance, color = Sex)) +
   geom_density()
 ```
 
+<div class="footer">
+    Painterly Analytics
+</div>
+
 ---
 Let's look at the same variables in a boxplot which is a good way to visualize continuous and categorical variables. The interquartile range for males is wider and females have a higher median value for privacy importance. This is consistent with the findings we saw in the frequency polygons.
 
 ```{r fig.width=6, fig.height=6,echo=FALSE,warning=FALSE,message=FALSE}
 qplot(x=Sex,y=Privacy.Importance,data=subset(AnonymityPoll,!is.na(Sex)), geom="boxplot") + coord_cartesian(ylim=c(0,100))
 ```
+
+<div class="footer">
+    Painterly Analytics
+</div>
 
 ---
 Let's look at the relationship between some of the other demographic data including age and conservativeness. The plot shows that there is not a linear relationship. The deeper colored dots indicate that most respondents neither very conservative or very liberal. Furthermore, this data is spread across all age groups.
@@ -139,6 +170,9 @@ ggplot(aes(x = Conservativeness, y = Age), data = AnonymityPoll) +
   geom_point(alpha=.5,size=2,position="jitter")
 ```
 
+<div class="footer">
+    Painterly Analytics
+</div>
 
 ---
 This boxplot gives an excellent summary of the interquartile range and median of privacy importance by level of conservativeness faceted by gender. Males have a wider range of privacy importance and lower median importance at all levels of conservativeness. There is no clear correlation between conservativeness and privacy importance as the responses.
@@ -147,7 +181,9 @@ This boxplot gives an excellent summary of the interquartile range and median of
 ggplot(AnonymityPoll, aes(as.factor(Conservativeness), Privacy.Importance)) + geom_boxplot(aes(fill=Sex)) + coord_cartesian(ylim=c(25,100))
 ```
 
-
+<div class="footer">
+    Painterly Analytics
+</div>
 
 
 ---
@@ -173,9 +209,13 @@ head(a)
 ---
 The plot of the privacy importance mean by age indicates a general n-shaped curve. Our previous histogram of the age distribution is coming in handy. Remember that there are more respondents in younger age groups and fewer respondents over seventy-five. Thus,it may also be useful to look at the median privacy mean by age.
 
-```{r echo=FALSE,warning=FALSE, message=FALSE}
+```{r echo=FALSE,warning=FALSE, message=FALSE,fig.height=6.5}
 ggplot(aes(Age,Privacy.Importance),data=AnonymityPoll) + geom_point(stat='summary',fun.y=mean) + geom_smooth() + ylab("Mean Privacy Importance")
 ```
+
+<div class="footer">
+    Painterly Analytics
+</div>
 
 ---
 The median privacy mean by age also indicates an n-shaped curve with slightly more dispersion. Privacy importance is less important at ages under twenty-five and ages of seventy-five. If few people over the age of seventy-five use the internet then internet privacy may less of a concern to them. Notice the wider bands in the older values for age where there are fewer respondents in the survey.
@@ -183,6 +223,11 @@ The median privacy mean by age also indicates an n-shaped curve with slightly mo
 ```{r fig.height=6, echo=FALSE,warning=FALSE, message=FALSE}
 ggplot(aes(Age,Privacy.Importance),data=AnonymityPoll) + geom_point(stat='summary',fun.y=median) + geom_smooth() + ylab("Median Privacy Importance")
 ```
+
+<div class="footer">
+    Painterly Analytics
+</div>
+
 ---
 Previously, I summarized the data on one variable of age. Now let's look at the data summarized by two variables,age and gender. Each unique combination of age and gender is represented.
 ```{r echo=FALSE}
@@ -198,6 +243,7 @@ head(b)
 
 ```
 
+
 ---
 Let's plot information on the internet by a log transformation of age. It shows a general decreasing trend with increasing age and a higher degree of variablity for males at some age points. The grand mean is the black plotted line.
 
@@ -207,6 +253,11 @@ ggplot(aes(x = Age, y = Info.On.Internet),
   geom_line(aes(color = Sex), stat = 'summary', fun.y = median) + scale_x_log10() + 
   geom_line(stat='summary',fun.y=mean,linetype=2)  #grand mean solution
 ```
+
+<div class="footer">
+    Painterly Analytics
+</div>
+
 ---
 Let's look at the info on the internet by age plotted using a smoother faceted by age. This also shows the decreasing trend  of info on the internet decreasing as age increases nicely de-lineated by gender.
 
@@ -215,6 +266,7 @@ ggplot(aes(x = Age, y = Info.On.Internet),
        data = subset(AnonymityPoll, !is.na(Region))) +
        geom_smooth(aes(color=Sex))
 ```
+
 
 ---
 ## We've only just begun!
@@ -237,6 +289,8 @@ ggplot(aes(x = Age, y = Info.On.Internet),
   - faceting data on a third variable 
   - usefulness of looking at the same information in a variety of plots
   - data transformations including log and smoothing
+
+
 
 ---
 Thank You
